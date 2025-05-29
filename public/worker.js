@@ -15,7 +15,9 @@ onmessage = async (e) => {
       );
       await tf.setBackend("wasm");
       await tf.ready();
-      tfliteModel = await tflite.loadTFLiteModel(e.data.modelPath);
+          tfliteModel = await tflite.loadTFLiteModel(e.data.modelPath, {
+            numThreads: -1,
+          });
       postMessage({ type: "init-done" });
     } else if (e.data.type === "predict" && tfliteModel) {
       console.log(tf.getBackend());
